@@ -1,0 +1,57 @@
+services:
+
+  spark-master:
+    image: apache/spark:3.5.7-python3
+    hostname: spark-master
+    command:
+      - /opt/spark/bin/spark-class
+      - org.apache.spark.deploy.master.Master
+      - --host
+      - spark-master
+      - --port
+      - "7077"
+      - --webui-port
+      - "8080"
+    ports:
+      - "127.0.0.1:8080:8080"
+    restart: unless-stopped
+
+  spark-worker-1:
+    image: apache/spark:3.5.7-python3
+    hostname: spark-worker-1
+    command:
+      - /opt/spark/bin/spark-class
+      - org.apache.spark.deploy.worker.Worker
+      - --cores
+      - "4"
+      - --memory
+      - 8g
+      - spark://spark-master:7077
+    depends_on:
+      - spark-master
+    restart: unless-stopped
+
+  spark-worker-2:
+    image: apache/spark:3.5.7-python3
+    hostname: spark-worker-2
+    command:
+      - /opt/spark/bin/spark-class
+      - org.apache.spark.deploy.worker.Worker
+      - --cores
+      - "4"
+      - --memory
+      - 8g
+      - spark://spark-master:7077
+    depends_on:
+      - spark-master
+    restart: unless-stopped
+
+  spark-client:
+    image: apache/spark:3.5.7-python3
+    hostname: spark-client
+    command: ["sleep", "infinity"]
+    depends_on:
+      - spark-master
+    volumes:
+      - ../src:/opt/gpuwaste/src:ro
+    restart: unless-stopped

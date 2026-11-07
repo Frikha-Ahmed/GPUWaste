@@ -1,0 +1,33 @@
+
+# Private database credentials
+docker/mongodb.env
+
+# Local environment and datasets
+.venv/
+data/
+__pycache__/
+
+# Python environments
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# AcmeTrace datasets
+data/
+
+# MongoDB credentials
+docker/mongodb.env
+.env
+.env.*
+
+# Generated analytical files
+*.parquet
+*.bin
+*.log
+
+# Temporary files
+.cache/
+.pytest_cache/
+.ipynb_checkpoints/
+

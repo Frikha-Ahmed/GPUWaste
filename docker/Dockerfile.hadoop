@@ -1,0 +1,8 @@
+FROM apache/hadoop:3.5.0
+
+USER root
+
+RUN mkdir -p /data/namenode /data/datanode \
+    && chown -R hadoop:users /data
+
+USER hadoop

@@ -1,0 +1,62 @@
+name: gpuwaste
+
+services:
+
+  namenode:
+    build:
+      context: .
+      dockerfile: Dockerfile.hadoop
+    image: gpuwaste-hadoop:3.5.0
+    hostname: namenode
+    command: ["hdfs", "namenode"]
+    environment:
+      ENSURE_NAMENODE_DIR: /data/namenode/current
+    env_file:
+      - hadoop.env
+    ports:
+      - "127.0.0.1:9870:9870"
+    volumes:
+      - namenode_data:/data/namenode
+    restart: unless-stopped
+
+  datanode1:
+    image: gpuwaste-hadoop:3.5.0
+    hostname: datanode1
+    command: ["hdfs", "datanode"]
+    env_file:
+      - hadoop.env
+    depends_on:
+      - namenode
+    volumes:
+      - datanode1_data:/data/datanode
+    restart: unless-stopped
+
+  datanode2:
+    image: gpuwaste-hadoop:3.5.0
+    hostname: datanode2
+    command: ["hdfs", "datanode"]
+    env_file:
+      - hadoop.env
+    depends_on:
+      - namenode
+    volumes:
+      - datanode2_data:/data/datanode
+    restart: unless-stopped
+
+  datanode3:
+    image: gpuwaste-hadoop:3.5.0
+    hostname: datanode3
+    command: ["hdfs", "datanode"]
+    env_file:
+      - hadoop.env
+    depends_on:
+      - namenode
+    volumes:
+      - datanode3_data:/data/datanode
+    restart: unless-stopped
+
+volumes:
+  namenode_data:
+  datanode1_data:
+  datanode2_data:
+  datanode3_data:

@@ -1,0 +1,34 @@
+services:
+
+  # MongoDB: stores analytical results for our dashboard
+  mongodb:
+    image: mongo:7.0.45-jammy
+    restart: unless-stopped
+
+    # Load database credentials
+    env_file:
+      - mongodb.env
+
+    # Allow local applications to connect to MongoDB
+    ports:
+      - "127.0.0.1:27017:27017"
+
+    # Keep database data when containers restart
+    volumes:
+      - mongodb7_data:/data/db
+
+  # Extend our existing Spark client
+  spark-client:
+    build:
+      context: .
+      dockerfile: Dockerfile.spark-client
+
+    image: gpuwaste-spark-client:3.5.7
+
+    # Give our export script access to MongoDB credentials
+    env_file:
+      - mongodb.env
+
+
+volumes:
+  mongodb7_data:

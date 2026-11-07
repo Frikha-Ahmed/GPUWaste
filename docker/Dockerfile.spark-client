@@ -1,0 +1,15 @@
+# Start from our existing Spark image
+FROM apache/spark:3.5.7-python3
+
+# Install the MongoDB Python driver
+USER root
+
+RUN python3 -m pip install --no-cache-dir \
+    --target /opt/gpuwaste/python \
+    "pymongo>=4,<5"
+
+# Make PyMongo available to Python
+ENV PYTHONPATH=/opt/gpuwaste/python
+
+# Run Spark without root privileges
+USER 185

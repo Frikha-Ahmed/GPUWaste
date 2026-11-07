@@ -1,0 +1,8 @@
+dataset,analysis,implementation,executors,time_seconds
+Kalos,GPU Utilization,Pandas,0,5.318
+Kalos,GPU Utilization,Spark,2,30.104
+Seren,GPU Utilization,Pandas,0,236.852
+Seren,GPU Utilization,Spark,1,89.251
+Seren,GPU Utilization,Spark,2,68.562
+Seren,Power and Jobs,Pandas,0,276.192
+Seren,Power and Jobs,Spark,2,67.254
